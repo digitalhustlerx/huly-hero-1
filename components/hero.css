@@ -1,0 +1,193 @@
+
+/* Reset & Base */
+.nex-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  background-color: #020408;
+}
+
+/* Background Video Wrapper */
+.nex-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.nex-hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  /* Default Mobile State per specs */
+  object-position: 55% top;
+  transform: scale(1.1);
+  transition: object-position 0.5s ease;
+}
+
+/* Gradient Overlay to ensure text readability against the beam */
+.nex-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(2,4,8,0.95) 0%, rgba(2,4,8,0.6) 40%, rgba(2,4,8,0.1) 100%);
+  z-index: 1;
+}
+
+/* Container */
+.nex-hero__container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: flex-start; /* Left align */
+}
+
+/* Content Block */
+.nex-hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  max-width: 100%;
+}
+
+/* Typography */
+.nex-hero__title {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 30%, #d5d8f6 80%, #a5f3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.nex-hero__subtext {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #8b949e;
+  margin-bottom: 2.5rem;
+  max-width: 100%;
+}
+
+/* CTA Button */
+.nex-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  padding: 0 2.5rem;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.nex-hero__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.nex-hero__cta svg {
+  margin-left: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.nex-hero__cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* =========================================
+   RESPONSIVE RULES
+   ========================================= */
+
+/* Mobile (≤ 639px) is default above. Specific adjustments: */
+@media (max-width: 639px) {
+  .nex-hero__title {
+    font-size: 2rem;
+  }
+  .nex-hero__container {
+    padding: 0 1.25rem;
+    padding-top: 4rem; /* Clear navbar */
+  }
+}
+
+/* Tablet (640px - 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .nex-hero {
+    height: 90vh; /* slightly shorter than full desktop */
+  }
+  
+  .nex-hero__title {
+    font-size: 3.5rem;
+  }
+
+  .nex-hero__subtext {
+    max-width: 80%;
+  }
+
+  .nex-hero__video {
+    object-position: 60% top; /* Slight offset */
+    transform: scale(1);
+  }
+}
+
+/* Desktop (≥ 1024px) */
+@media (min-width: 1024px) {
+  .nex-hero {
+    height: 100vh;
+  }
+
+  .nex-hero__container {
+    padding: 0 3rem;
+  }
+
+  .nex-hero__content {
+    /* Strict max-width per spec */
+    max-width: 520px;
+    margin-left: 0; /* Pin to left margin */
+  }
+
+  .nex-hero__title {
+    font-size: 4.5rem; /* Large scale */
+    line-height: 1;
+  }
+
+  .nex-hero__subtext {
+    font-size: 1.25rem;
+    max-width: 480px;
+  }
+
+  .nex-hero__video {
+    /* Beam offset approx 58% from left */
+    object-position: 58% top;
+    transform: none;
+  }
+  
+  /* Refine gradient for desktop to allow right side to be clearer */
+  .nex-hero__overlay {
+    background: linear-gradient(90deg, rgba(2,4,8,0.95) 0%, rgba(2,4,8,0.8) 35%, rgba(2,4,8,0.0) 70%);
+  }
+}
