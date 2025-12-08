@@ -200,8 +200,10 @@
   }
   .nex-hero__video {
     object-fit: cover;
-    object-position: 55% top;
-    transform: scale(1.1);
+    /* Shift focus to the right to reveal the beam/spillover that is cut off on mobile */
+    object-position: 75% top;
+    /* Remove scale to show more of the scene */
+    transform: none;
   }
   .nex-hero__container {
     flex-direction: column;
