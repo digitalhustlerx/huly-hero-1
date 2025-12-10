@@ -1,3 +1,4 @@
+
 /* Reset & Base */
 .nex-hero {
   position: relative;
@@ -67,7 +68,7 @@
 
 /* Typography Animations */
 .nex-hero__title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 4rem; /* Larger */
   line-height: 1.05;
   font-weight: 700;
@@ -108,7 +109,7 @@
   padding: 0 2.5rem;
   background-color: #ffffff;
   color: #030508;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -179,6 +180,98 @@
   to { opacity: 1; }
 }
 
+/* --- New Futuristic Ticker Styles --- */
+
+.nex-hero__ticker-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3.5rem; /* 56px */
+  background: rgba(3, 5, 8, 0.8);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 20;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.nex-hero__ticker-label {
+  display: none;
+}
+
+.nex-hero__ticker-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #030508 0%, transparent 5%, transparent 95%, #030508 100%);
+  z-index: 25;
+}
+
+.nex-hero__ticker-track {
+  display: flex;
+  gap: 0;
+  animation: tickerScroll 60s linear infinite;
+  padding-left: 2rem;
+  will-change: transform;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); } /* Move by 1/3 since we tripled the list */
+}
+
+.nex-hero__ticker-item {
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nex-hero__ticker-symbol {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  margin-right: 0.75rem;
+}
+
+.nex-hero__ticker-price {
+  font-family: 'Inter', monospace; /* Monospace for numbers */
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: #ffffff;
+  margin-right: 0.75rem;
+}
+
+.nex-hero__ticker-change {
+  font-family: 'Inter', monospace;
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nex-hero__ticker-divider {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background-color: #3b82f6; /* Blue dot */
+  border-radius: 50%;
+  opacity: 0.5;
+  box-shadow: 0 0 8px #3b82f6;
+}
+
 /* Tablet: 640px–1023px */
 @media (min-width: 640px) and (max-width: 1023px) {
   .nex-hero__video {
@@ -222,5 +315,11 @@
   .nex-hero__subtext {
     font-size: 1.1rem;
     margin-bottom: 2.5rem;
+  }
+  .nex-hero__ticker-label {
+    display: none; /* Hide label on mobile to save space */
+  }
+  .nex-hero__ticker-mask {
+    left: 0;
   }
 }

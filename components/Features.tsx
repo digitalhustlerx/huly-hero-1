@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Zap, ShieldCheck, TrendingUp, Cpu } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -45,13 +46,13 @@ const Features = () => {
           className={`text-center mb-20 transition-all duration-1000 transform ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-blue-400 mb-4">
-            System Architecture
+            Core Advantages
           </span>
           <h2 className="text-4xl sm:text-6xl text-chrome tracking-tight mb-6">
-            Engineered for Dominance
+            Built for Your Success
           </h2>
           <p className="max-w-2xl mx-auto text-lg text-secondary font-light">
-            A trading environment built without compromise. Speed, intelligence, and security converged into one monolithic platform.
+            A seamless platform where speed, smart insights, and robust security power your trading journey.
           </p>
         </div>
 
@@ -59,26 +60,26 @@ const Features = () => {
           <FeatureCard 
             index={0}
             icon={Zap} 
-            title="Zero-Latency Core" 
-            description="Direct market access with execution speeds measuring in microseconds. Slip is a thing of the past." 
+            title="Blazing-Fast Execution" 
+            description="Experience trades executed at unmatched speeds, leaving slippage behind." 
           />
           <FeatureCard 
             index={1}
             icon={TrendingUp} 
-            title="Algorithmic Radar" 
-            description="Our scanning engine processes 50,000+ data points per second to identify breakout patterns instantly." 
+            title="Smart Market Scans" 
+            description="Our system constantly scans for opportunities, spotting trends as they emerge." 
           />
           <FeatureCard 
             index={2}
             icon={Cpu} 
-            title="Neural Forecasting" 
-            description="Proprietary AI models predict short-term price movements with up to 87% historical accuracy." 
+            title="AI-Powered Predictions" 
+            description="Leverage advanced AI to forecast market moves with impressive accuracy." 
           />
           <FeatureCard 
             index={3}
             icon={ShieldCheck} 
-            title="Fortress Security" 
-            description="Military-grade encryption and cold storage custody ensure your capital remains untouchable." 
+            title="Top-Tier Security" 
+            description="Your assets are protected with industry-leading encryption and secure storage." 
           />
         </div>
       </div>

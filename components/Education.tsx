@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BookOpen, ArrowUpRight, Clock, Award } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -50,12 +51,12 @@ const Education = () => {
             ref={contentRef}
             className={`lg:w-1/3 transition-all duration-1000 ${contentVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}
           >
-            <span className="text-blue-500 font-bold uppercase tracking-widest text-xs mb-4 block">Knowledge Base</span>
+            <span className="text-blue-500 font-bold uppercase tracking-widest text-xs mb-4 block">Learn & Grow</span>
             <h2 className="text-4xl sm:text-5xl font-bold text-chrome tracking-tight mb-6">
-              Master the<br />Algorithm.
+              Master Your<br />Market.
             </h2>
             <p className="text-lg text-secondary font-light leading-relaxed mb-8">
-              Trading is not gambling; it is applied probability. Our curriculum is designed to transform novices into disciplined, data-driven operators.
+              Trading is a skill, and we're here to teach you. Our courses turn beginners into confident, informed traders.
             </p>
             
             <div className="p-6 bg-[#0e121a] border border-white/5 rounded-lg mb-8">
@@ -63,7 +64,7 @@ const Education = () => {
                  <Award className="text-yellow-500 w-5 h-5" />
                  <h4 className="text-white font-bold font-display">Certified Analyst Program</h4>
                </div>
-               <p className="text-sm text-gray-500 mb-4">Complete our 50-hour intensive track and get funded with real capital.</p>
+               <p className="text-sm text-gray-500 mb-4">Finish our in-depth program and gain access to real trading capital.</p>
                <a href="#" className="text-sm font-bold text-white border-b border-blue-500 pb-0.5 hover:text-blue-400 transition-colors">View Requirements</a>
             </div>
 
@@ -74,12 +75,12 @@ const Education = () => {
 
           <div className="lg:w-2/3">
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <CourseCard index={0} category="Fundamentals" title="Market Structure & Order Flow" level="LVL 1" duration="45 MIN" />
-               <CourseCard index={1} category="Technical" title="Supply & Demand Zones" level="LVL 2" duration="90 MIN" />
-               <CourseCard index={2} category="Psychology" title="Risk Management Protocols" level="LVL 1" duration="30 MIN" />
-               <CourseCard index={3} category="Advanced" title="Wyckoff Accumulation Theory" level="LVL 3" duration="120 MIN" />
-               <CourseCard index={4} category="Derivatives" title="Options Greeks Explained" level="LVL 2" duration="60 MIN" />
-               <CourseCard index={5} category="Strategy" title="Scalping the 1-Minute Chart" level="LVL 3" duration="75 MIN" />
+               <CourseCard index={0} category="Fundamentals" title="Market Basics & How Prices Move" level="LVL 1" duration="45 MIN" />
+               <CourseCard index={1} category="Technical" title="Understanding Supply & Demand" level="LVL 2" duration="90 MIN" />
+               <CourseCard index={2} category="Psychology" title="Smart Risk Management" level="LVL 1" duration="30 MIN" />
+               <CourseCard index={3} category="Advanced" title="Advanced Market Cycles (Wyckoff)" level="LVL 3" duration="120 MIN" />
+               <CourseCard index={4} category="Derivatives" title="Options Trading Fundamentals" level="LVL 2" duration="60 MIN" />
+               <CourseCard index={5} category="Strategy" title="Quick Trading Strategies (Scalping)" level="LVL 3" duration="75 MIN" />
              </div>
           </div>
 

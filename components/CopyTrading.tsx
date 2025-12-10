@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Users, TrendingUp, ChevronRight, Activity } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -54,16 +55,16 @@ const CopyTrading = () => {
           >
             <div className="flex items-center gap-2 mb-6">
                 <div className="w-10 h-[1px] bg-blue-500"></div>
-                <span className="text-blue-500 font-bold uppercase tracking-widest text-xs">Social Alpha</span>
+                <span className="text-blue-500 font-bold uppercase tracking-widest text-xs">Follow the Best</span>
             </div>
             
             <h2 className="text-4xl sm:text-6xl font-bold text-chrome tracking-tight leading-tight mb-8">
-              Replicate Success.<br />
-              <span className="text-white/40">Automate Wealth.</span>
+              Achieve More.<br />
+              <span className="text-white/40">Effortlessly.</span>
             </h2>
             
             <p className="text-lg text-secondary leading-relaxed mb-8">
-              Bypass the learning curve. Mirror the exact positions of verified institutional-grade traders. Your portfolio updates in real-time, matching their every move.
+              New to trading? No problem. Follow top traders and automatically copy their moves, watching your portfolio grow.
             </p>
 
             <div className="space-y-6">
@@ -72,7 +73,7 @@ const CopyTrading = () => {
                    <Users className="w-5 h-5 text-blue-500" />
                  </div>
                  <div>
-                   <h4 className="text-white font-bold font-display text-lg">Vetted Elite Traders</h4>
+                   <h4 className="text-white font-bold font-display text-lg">Proven Top Traders</h4>
                    <p className="text-sm text-gray-500 mt-1">Only the top 1% of traders with verified track records make it to our master list.</p>
                  </div>
                </div>
@@ -81,7 +82,7 @@ const CopyTrading = () => {
                    <Activity className="w-5 h-5 text-blue-500" />
                  </div>
                  <div>
-                   <h4 className="text-white font-bold font-display text-lg">Seamless Sync</h4>
+                   <h4 className="text-white font-bold font-display text-lg">Instant Trade Sync</h4>
                    <p className="text-sm text-gray-500 mt-1">Zero latency copying. When they enter a position, you enter instantly.</p>
                  </div>
                </div>
@@ -97,9 +98,9 @@ const CopyTrading = () => {
              <div className="flex items-center justify-between px-6 py-4 bg-[#0e121a] border-b border-white/5">
                 <div className="flex items-center gap-2">
                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                   <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">Live Market Feed</span>
+                   <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">Live Leaderboard</span>
                 </div>
-                <div className="text-xs font-mono text-blue-500">NET_PROFIT_LEADERBOARD</div>
+                <div className="text-xs font-mono text-blue-500">Profit Leaderboard</div>
              </div>
 
              <div className="p-0">
