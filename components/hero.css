@@ -1,3 +1,4 @@
+
 /* Reset & Base */
 .nex-hero {
   position: relative;
@@ -27,16 +28,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Push beam to the right to clear space for left-aligned text */
+  /* Push beam to the right to clear space for left-aligned text on desktop */
   object-position: 70% center; 
   transition: object-position 0.5s ease;
   filter: saturate(1.1) contrast(1.1);
 }
 
-/* Gradient Overlay - Darker for text legibility */
+/* Gradient Overlay - Base (Desktop) */
 .nex-hero__overlay {
   position: absolute;
   inset: 0;
+  /* Darken the left side where text sits, transparent on right where beam is */
   background: radial-gradient(ellipse at 80% 50%, rgba(3, 5, 8, 0.2) 0%, rgba(3, 5, 8, 0.7) 60%, rgba(3, 5, 8, 0.95) 100%);
   pointer-events: none;
   z-index: 1;
@@ -255,15 +257,43 @@
   }
 }
 
-/* Tablet/Mobile Adjustments to ensure text doesn't overlap beam if it shifts */
+/* Tablet/Mobile Adjustments to ensure text doesn't overlap beam */
 @media (max-width: 1023px) {
   .nex-hero__video {
-    /* Center video on mobile to prevent cropping */
+    /* Center video on mobile to prevent cropping, as requested */
     object-position: center center;
   }
   
+  .nex-hero__container {
+    /* More side padding to squeeze text away from edges */
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .nex-hero__content {
+    /* Limit width so text doesn't span full width into the beam */
+    max-width: 80%;
+    margin-right: auto;
+  }
+  
   .nex-hero__overlay {
-    /* Add stronger left-side gradient on mobile to make text pop against any potential beam overlap */
-    background: radial-gradient(ellipse at 80% 50%, rgba(3, 5, 8, 0.1) 0%, rgba(3, 5, 8, 0.8) 50%, rgba(3, 5, 8, 0.95) 90%);
+    /* Strong left-to-right gradient to darken the text area */
+    background: linear-gradient(90deg, rgba(3, 5, 8, 0.95) 0%, rgba(3, 5, 8, 0.8) 50%, rgba(3, 5, 8, 0.3) 100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .nex-hero__content {
+    max-width: 100%; /* On very small screens, use full width but rely on overlay */
+    padding-right: 1rem;
+  }
+  
+  .nex-hero__title {
+    font-size: 2.75rem;
+  }
+  
+  .nex-hero__overlay {
+     /* Even darker for mobile readability */
+     background: linear-gradient(90deg, rgba(3, 5, 8, 0.95) 0%, rgba(3, 5, 8, 0.85) 60%, rgba(3, 5, 8, 0.4) 100%);
   }
 }

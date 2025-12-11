@@ -37,58 +37,74 @@ interface TraderProfileCardProps {
   onViewChange: (view: ViewState) => void;
 }
 
-const TraderProfileCard: React.FC<TraderProfileCardProps> = ({ trader, onViewChange }) => (
-  <div className="group relative bg-[#0e121a] border border-white/5 rounded-xl p-5 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
-    <div className="absolute top-4 right-4 text-xs font-mono text-gray-600 font-bold">#{trader.rank}</div>
-    
-    <div className="flex items-center gap-4 mb-6">
-      <div className="relative">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-800 to-black border border-white/10 flex items-center justify-center font-bold text-lg font-display">
-          {trader.name.substring(0, 2).toUpperCase()}
-        </div>
-        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[#0e121a] rounded-full"></div>
-      </div>
-      <div>
-        <h3 className="font-bold text-white group-hover:text-blue-400 transition-colors">{trader.name}</h3>
-        <div className="flex gap-2 mt-1">
-          {trader.tags.map((tag: string) => (
-            <span key={tag} className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
+const TraderProfileCard: React.FC<TraderProfileCardProps> = ({ trader, onViewChange }) => {
+  
+  const getRiskTooltip = (risk: number) => {
+    if (risk < 4) return "Low Risk: Conservative strategy focusing on capital preservation.";
+    if (risk < 7) return "Moderate Risk: Balanced approach with potential for significant gains and losses.";
+    return "High Risk: Aggressive strategy aiming for maximum returns with higher volatility.";
+  };
 
-    <div className="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
-      <div>
-        <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Total Profit</div>
-        <div className="text-xl font-bold font-mono text-green-400">+{trader.pnl.toFixed(1)}%</div>
-      </div>
-      <div>
-        <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Win Rate</div>
-        <div className="text-xl font-bold font-mono text-white">{trader.winRate}%</div>
-      </div>
-      <div>
-        <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Followers</div>
-        <div className="text-sm font-bold font-mono text-gray-300">{(trader.followers / 1000).toFixed(1)}k</div>
-      </div>
-      <div>
-        <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Risk Level</div>
-        <div className={`text-sm font-bold font-mono px-2 py-0.5 inline-block rounded ${trader.risk < 4 ? 'bg-green-500/20 text-green-400' : trader.risk < 7 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}`}>
-          {trader.risk}/10
+  return (
+    <div className="group relative bg-[#0e121a] border border-white/5 rounded-xl p-5 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+      <div className="absolute top-4 right-4 text-xs font-mono text-gray-600 font-bold">#{trader.rank}</div>
+      
+      <div className="flex items-center gap-4 mb-6">
+        <div className="relative">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-800 to-black border border-white/10 flex items-center justify-center font-bold text-lg font-display">
+            {trader.name.substring(0, 2).toUpperCase()}
+          </div>
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[#0e121a] rounded-full"></div>
+        </div>
+        <div>
+          <h3 className="font-bold text-white group-hover:text-blue-400 transition-colors">{trader.name}</h3>
+          <div className="flex gap-2 mt-1">
+            {trader.tags.map((tag: string) => (
+              <span key={tag} className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5">
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
 
-    <button 
-      onClick={() => onViewChange('auth')}
-      className="w-full py-3 bg-white/5 hover:bg-blue-600 text-white font-bold text-sm uppercase tracking-wider rounded border border-white/5 hover:border-blue-500 transition-all flex items-center justify-center gap-2"
-    >
-      <Zap size={14} /> Copy This Trader
-    </button>
-  </div>
-);
+      <div className="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+        <div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Total Profit</div>
+          <div className="text-xl font-bold font-mono text-green-400">+{trader.pnl.toFixed(1)}%</div>
+        </div>
+        <div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Win Rate</div>
+          <div className="text-xl font-bold font-mono text-white">{trader.winRate}%</div>
+        </div>
+        <div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Followers</div>
+          <div className="text-sm font-bold font-mono text-gray-300">{(trader.followers / 1000).toFixed(1)}k</div>
+        </div>
+        <div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Risk Level</div>
+          <div className="relative group/tooltip inline-block">
+            <div className={`text-sm font-bold font-mono px-2 py-0.5 inline-block rounded cursor-help ${trader.risk < 4 ? 'bg-green-500/20 text-green-400' : trader.risk < 7 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}`}>
+              {trader.risk}/10
+            </div>
+            {/* Tooltip */}
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-[#0a0c10] border border-white/20 rounded-lg shadow-xl text-[10px] text-gray-300 leading-tight opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none z-50 text-center">
+               {getRiskTooltip(trader.risk)}
+               <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-[#0a0c10]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button 
+        onClick={() => onViewChange('auth')}
+        className="w-full py-3 bg-white/5 hover:bg-blue-600 text-white font-bold text-sm uppercase tracking-wider rounded border border-white/5 hover:border-blue-500 transition-all flex items-center justify-center gap-2"
+      >
+        <Zap size={14} /> Copy This Trader
+      </button>
+    </div>
+  );
+};
 
 type FilterType = 'all traders' | 'most popular' | 'safe & stable' | 'high profit' | 'new stars';
 
@@ -171,10 +187,10 @@ const CopyTradingView: React.FC<CopyTradingViewProps> = ({ onViewChange }) => {
                   <button 
                     key={filter} 
                     onClick={() => setActiveFilter(filter.toLowerCase() as FilterType)}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide whitespace-nowrap transition-all ${
+                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide whitespace-nowrap transition-all duration-300 ease-in-out ${
                       activeFilter === filter.toLowerCase() 
-                        ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' 
-                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                        ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.5)] border border-blue-500 transform -translate-y-0.5' 
+                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-transparent'
                     }`}
                   >
                     {filter}

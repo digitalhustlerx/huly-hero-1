@@ -14,50 +14,59 @@ interface TickerItem {
   change: number;
 }
 
-const INITIAL_TICKER_DATA: TickerItem[] = [
-  { symbol: 'BTC/USD', price: 64230.15, change: 2.4 },
-  { symbol: 'ETH/USD', price: 3450.22, change: 1.8 },
-  { symbol: 'SOL/USD', price: 145.80, change: 5.2 },
-  { symbol: 'XRP/USD', price: 0.62, change: 0.5 },
-  { symbol: 'BNB/USD', price: 590.10, change: -1.1 },
-  { symbol: 'ADA/USD', price: 0.45, change: -0.8 },
-  { symbol: 'DOGE/USD', price: 0.16, change: 8.4 },
-  { symbol: 'AVAX/USD', price: 35.60, change: 2.1 },
-  { symbol: 'DOT/USD', price: 7.20, change: -0.5 },
-  { symbol: 'LINK/USD', price: 14.50, change: 1.2 },
-  { symbol: 'MATIC/USD', price: 0.72, change: -1.5 },
-  { symbol: 'UNI/USD', price: 10.40, change: 3.1 },
-];
+// Map CoinGecko API IDs to the desired display symbol
+const COIN_MAP: { [key: string]: string } = {
+  'bitcoin': 'BTC/USD',
+  'ethereum': 'ETH/USD',
+  'solana': 'SOL/USD',
+  'ripple': 'XRP/USD',
+  'binancecoin': 'BNB/USD',
+  'cardano': 'ADA/USD',
+  'dogecoin': 'DOGE/USD',
+  'avalanche-2': 'AVAX/USD',
+  'polkadot': 'DOT/USD',
+  'chainlink': 'LINK/USD',
+  'matic-network': 'MATIC/USD',
+  'uniswap': 'UNI/USD',
+};
 
 const Hero: React.FC<HeroProps> = ({ onViewChange }) => {
-  const [tickerItems, setTickerItems] = useState<TickerItem[]>(INITIAL_TICKER_DATA);
+  const [tickerItems, setTickerItems] = useState<TickerItem[]>([]);
 
-  // Simulate live market data updates
+  // Fetch live market data from CoinGecko API
+  const fetchMarketData = async () => {
+    const coinIds = Object.keys(COIN_MAP).join(',');
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd&include_24hr_change=true`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`CoinGecko API request failed with status ${response.status}`);
+      }
+      const data = await response.json();
+      
+      const newTickerItems: TickerItem[] = Object.keys(data).map(id => ({
+        symbol: COIN_MAP[id] || 'N/A',
+        price: data[id].usd || 0,
+        change: data[id].usd_24h_change || 0,
+      }));
+
+      // Maintain a consistent order based on the COIN_MAP
+      const orderedItems = Object.keys(COIN_MAP)
+        .map(id => newTickerItems.find(item => item.symbol === COIN_MAP[id]))
+        .filter((item): item is TickerItem => !!item);
+
+      setTickerItems(orderedItems);
+    } catch (error) {
+      console.error("Failed to fetch market data:", error);
+      // In case of an API error, the ticker will remain empty or with its last known state.
+    }
+  };
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTickerItems(prevItems => 
-        prevItems.map(item => {
-          // Randomly update 40% of the items each tick
-          if (Math.random() > 0.6) {
-            const volatility = 0.005; // 0.5% max volatility
-            const randomChange = 1 + (Math.random() * volatility * 2 - volatility);
-            const newPrice = item.price * randomChange;
-            
-            // Adjust change percentage slightly
-            const newChangePercent = item.change + (Math.random() * 0.4 - 0.2);
-            
-            return {
-              ...item,
-              price: newPrice,
-              change: newChangePercent
-            };
-          }
-          return item;
-        })
-      );
-    }, 1500);
-
-    return () => clearInterval(interval);
+    fetchMarketData(); // Fetch immediately on mount
+    const interval = setInterval(fetchMarketData, 30000); // Refetch every 30 seconds
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
   return (
@@ -70,7 +79,7 @@ const Hero: React.FC<HeroProps> = ({ onViewChange }) => {
           loop 
           playsInline
           poster="https://huly.io/_next/static/media/hero-poster.png"
-          preload="auto"
+          preload="metadata"
         >
           <source src="https://huly.io/videos/pages/home/hero/hero.mp4?updated=20240607144404" type="video/mp4" />
           <source src="https://huly.io/videos/pages/home/hero/hero.webm?updated=20240607144404" type="video/webm" />
@@ -105,25 +114,27 @@ const Hero: React.FC<HeroProps> = ({ onViewChange }) => {
       </div>
       
       {/* High-Tech Ticker Tape */}
-      <div className="nex-hero__ticker-container">
-         <div className="nex-hero__ticker-mask"></div>
-         <div className="nex-hero__ticker-track">
-             {/* Tripled list for seamless looping on wide screens */}
-             {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
-               <div key={`${item.symbol}-${i}`} className="nex-hero__ticker-item">
-                 <span className="nex-hero__ticker-symbol">{item.symbol}</span>
-                 <span className="nex-hero__ticker-price">
-                   ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                 </span>
-                 <span className={`nex-hero__ticker-change ${item.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                   {item.change >= 0 ? '+' : ''}{item.change.toFixed(2)}%
-                   {item.change >= 0 ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
-                 </span>
-                 <div className="nex-hero__ticker-divider"></div>
-               </div>
-             ))}
-         </div>
-      </div>
+      {tickerItems.length > 0 && (
+        <div className="nex-hero__ticker-container">
+          <div className="nex-hero__ticker-mask"></div>
+          <div className="nex-hero__ticker-track">
+              {/* Tripled list for seamless looping on wide screens */}
+              {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
+                <div key={`${item.symbol}-${i}`} className="nex-hero__ticker-item">
+                  <span className="nex-hero__ticker-symbol">{item.symbol}</span>
+                  <span className="nex-hero__ticker-price">
+                    ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: item.price > 1 ? 2 : 4 })}
+                  </span>
+                  <span className={`nex-hero__ticker-change ${item.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {item.change >= 0 ? '+' : ''}{item.change.toFixed(2)}%
+                    {item.change >= 0 ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                  </span>
+                  <div className="nex-hero__ticker-divider"></div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
