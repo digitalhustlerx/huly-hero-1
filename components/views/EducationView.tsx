@@ -1,195 +1,157 @@
 
-
 import React, { useState } from 'react';
-import { PlayCircle, Clock, Award, BookOpen, Lock, Filter, CheckCircle2, ChevronRight, BarChart } from 'lucide-react';
+import { BookOpen, Award, Zap, BrainCircuit, LineChart, BarChart, ShieldCheck } from 'lucide-react';
+import { ViewState } from '../../App';
 
-// Enhanced Mock Data
-const allCourses = [
-  { id: 1, title: "Terminal Basics & Setup", lessons: 4, duration: "1h 20m", progress: 100, category: 'technical', level: 'Beginner' },
-  { id: 2, title: "Order Flow Analysis", lessons: 8, duration: "3h 45m", progress: 35, category: 'technical', level: 'Advanced' },
-  { id: 3, title: "Risk Management Protocols", lessons: 5, duration: "2h 10m", progress: 0, category: 'fundamental', level: 'Intermediate' },
-  { id: 4, title: "Derivative Greeks Explained", lessons: 12, duration: "6h 30m", progress: 0, category: 'technical', level: 'Expert' },
-  { id: 5, title: "Algorithmic Strategy Design", lessons: 6, duration: "4h 00m", progress: 0, category: 'technical', level: 'Expert' },
-  { id: 6, title: "Market Psychology Mastery", lessons: 3, duration: "1h 15m", progress: 0, category: 'psychology', level: 'Intermediate' },
-  { id: 7, title: "Macroeconomic Indicators", lessons: 5, duration: "2h 30m", progress: 0, category: 'fundamental', level: 'Advanced' },
-  { id: 8, title: "Supply & Demand Zones", lessons: 7, duration: "3h 10m", progress: 10, category: 'technical', level: 'Intermediate' },
-  { id: 9, title: "Blockchain Architecture", lessons: 4, duration: "2h 00m", progress: 0, category: 'fundamental', level: 'Beginner' },
+interface EducationViewProps {
+  onViewChange: (view: ViewState) => void;
+}
+
+const modules = [
+  { id: 'intro', title: 'Introduction to Crypto', icon: Zap },
+  { id: 'blockchain', title: 'Blockchain Fundamentals', icon: BrainCircuit },
+  { id: 'market', title: 'Understanding the Market', icon: BarChart },
+  { id: 'charting', title: 'Basics of Charting', icon: LineChart },
+  { id: 'risk', title: 'Risk Management', icon: ShieldCheck },
 ];
 
-const CourseModule = ({ title, lessons, duration, progress, category, level }: any) => (
-  <div className="flex flex-col h-full p-6 bg-[#0e121a] border border-white/5 rounded-xl hover:border-blue-500/30 hover:bg-[#131720] transition-all group cursor-pointer relative overflow-hidden">
-     {/* Category Stripe */}
-     <div className={`absolute top-0 left-0 w-1 h-full ${category === 'technical' ? 'bg-blue-500' : category === 'fundamental' ? 'bg-emerald-500' : 'bg-purple-500'}`}></div>
+const EducationContent = ({ module }: { module: string }) => {
+  const styles = {
+    h2: "text-3xl font-bold text-chrome mb-6 border-l-4 border-blue-500 pl-4",
+    h3: "text-2xl font-bold text-white mb-4 mt-8",
+    p: "text-secondary leading-relaxed mb-4",
+    ul: "list-disc list-inside text-secondary pl-4 mb-4 space-y-2",
+    strong: "text-white font-semibold",
+  };
 
-     <div className="flex justify-between items-start mb-4 pl-2">
-        <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-300 group-hover:text-blue-400 group-hover:scale-110 transition-transform">
-           <BookOpen size={20} />
+  switch (module) {
+    case 'intro':
+      return (
+        <div>
+          <h2 className={styles.h2}>Module 1: Introduction to Cryptocurrency</h2>
+          <p className={styles.p}>Welcome to the exciting world of digital assets! This module will give you a foundational understanding of what cryptocurrency is, why it was created, and its significance in the future of finance.</p>
+          
+          <h3 className={styles.h3}>What is Cryptocurrency?</h3>
+          <p className={styles.p}>At its core, a cryptocurrency is a digital or virtual currency secured by cryptography, which makes it nearly impossible to counterfeit or double-spend. Many cryptocurrencies are decentralized networks based on blockchain technology—a distributed ledger enforced by a disparate network of computers. A defining feature of cryptocurrencies is that they are generally not issued by any central authority, rendering them theoretically immune to government interference or manipulation.</p>
+
+          <h3 className={styles.h3}>The Birth of Bitcoin</h3>
+          <p className={styles.p}>The first blockchain-based cryptocurrency was Bitcoin, which still remains the most popular and most valuable. It was created in 2009 by an anonymous individual or group known as Satoshi Nakamoto. The goal was to create a "peer-to-peer electronic cash system" that could operate without a central bank or single administrator. This idea was revolutionary and sparked the creation of thousands of other cryptocurrencies, often referred to as "altcoins."</p>
         </div>
-        <div className="flex flex-col items-end gap-2">
-           {progress === 0 ? <Lock size={14} className="text-gray-600" /> : <div className="text-xs font-mono text-blue-400">{progress}%</div>}
-           <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded border ${
-             level === 'Beginner' ? 'border-green-500/30 text-green-500' : 
-             level === 'Intermediate' ? 'border-yellow-500/30 text-yellow-500' : 
-             'border-red-500/30 text-red-500'
-           }`}>
-             {level}
-           </span>
+      );
+    case 'blockchain':
+      return (
+        <div>
+          <h2 className={styles.h2}>Module 2: Blockchain Fundamentals</h2>
+          <p className={styles.p}>Blockchain is the technology that underpins almost all cryptocurrencies. Understanding how it works is crucial to understanding the value and security of digital assets.</p>
+
+          <h3 className={styles.h3}>The "Blocks" and the "Chain"</h3>
+          <p className={styles.p}>A blockchain is a growing list of records, called <strong className={styles.strong}>blocks</strong>, that are linked together using cryptography. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data. This design makes it incredibly resistant to modification of its data. Because each block is linked to the one before it, any change in one block would require the alteration of all subsequent blocks, which is computationally impractical for a large network.</p>
+          
+          <h3 className={styles.h3}>Decentralization and Transparency</h3>
+          <p className={styles.p}>Instead of a central server storing the data (like a bank's ledger), the blockchain's ledger is distributed across a network of computers. This is <strong className={styles.strong}>decentralization</strong>. It means no single person or entity has control. Anyone on the network can view the transaction history, making it transparent, but the identities of the participants are pseudonymous (represented by their wallet addresses).</p>
         </div>
-     </div>
+      );
+    case 'market':
+        return (
+          <div>
+            <h2 className={styles.h2}>Module 3: Understanding the Market</h2>
+            <p className={styles.p}>The crypto market is dynamic and unique. This module covers the key concepts you need to navigate it.</p>
+            
+            <h3 className={styles.h3}>Key Terms</h3>
+            <ul className={styles.ul}>
+                <li><strong className={styles.strong}>Market Capitalization (Market Cap):</strong> The total value of a cryptocurrency. It's calculated by multiplying the current market price of a single coin by the total number of coins in circulation.</li>
+                <li><strong className={styles.strong}>Liquidity:</strong> The ease with which an asset can be bought or sold without causing a significant change in its price. High liquidity is generally a sign of a healthy market.</li>
+                <li><strong className={styles.strong}>Volatility:</strong> The measure of how much the price of an asset fluctuates. The crypto market is known for its high volatility, which presents both opportunities and risks.</li>
+            </ul>
+          </div>
+        );
+    case 'charting':
+      return (
+        <div>
+          <h2 className={styles.h2}>Module 4: Basics of Charting</h2>
+          <p className={styles.p}>Technical analysis involves reading price charts to forecast future price movements. Candlestick charts are the most common tool traders use.</p>
 
-     <h3 className="text-lg font-bold text-white mb-2 pl-2 group-hover:text-blue-400 transition-colors leading-tight">{title}</h3>
-     
-     <div className="mt-auto pl-2">
-       <p className="text-xs text-gray-500 mb-4 flex items-center gap-2">
-         <Clock size={12} /> {duration} • {lessons} Lessons
-       </p>
-       
-       {/* Progress Bar */}
-       <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-          <div className={`h-full ${progress === 100 ? 'bg-green-500' : 'bg-blue-500'}`} style={{width: `${progress}%`}}></div>
-       </div>
-     </div>
-  </div>
-);
+          <h3 className={styles.h3}>Reading a Candlestick</h3>
+          <p className={styles.p}>Each candlestick represents a specific time period (e.g., one hour, one day). It shows four key pieces of information:</p>
+          <ul className={styles.ul}>
+            <li><strong className={styles.strong}>Open:</strong> The price at the start of the period.</li>
+            <li><strong className={styles.strong}>High:</strong> The highest price reached during the period.</li>
+            <li><strong className={styles.strong}>Low:</strong> The lowest price reached during the period.</li>
+            <li><strong className={styles.strong}>Close:</strong> The price at the end of the period.</li>
+          </ul>
+          <p className={styles.p}>The "body" of the candle is the wide part, showing the range between the open and close. If the close is above the open, the candle is typically green (bullish). If the close is below the open, it's red (bearish). The thin lines (or "wicks") show the high and low.</p>
+        </div>
+      );
+    case 'risk':
+      return (
+        <div>
+          <h2 className={styles.h2}>Module 5: Risk Management</h2>
+          <p className={styles.p}>Successful trading is not just about making profits; it's about protecting your capital. Proper risk management is arguably the most important skill for any trader.</p>
 
-const EducationView = () => {
-  const [filter, setFilter] = useState('all');
+          <h3 className={styles.h3}>The Golden Rule: Never Risk More Than You Can Afford to Lose</h3>
+          <p className={styles.p}>This is the most fundamental principle. The crypto market is volatile, and prices can drop dramatically. Only invest an amount of money that you would be okay with losing entirely.</p>
 
-  const filteredCourses = filter === 'all' 
-    ? allCourses 
-    : allCourses.filter(course => course.category === filter);
+          <h3 className={styles.h3}>Key Techniques</h3>
+          <ul className={styles.ul}>
+            <li><strong className={styles.strong}>Position Sizing:</strong> Don't put all your capital into a single trade. A common rule of thumb is to risk only 1-2% of your total trading capital on any single trade.</li>
+            <li><strong className={styles.strong}>Stop-Loss Orders:</strong> A stop-loss is an order you place with an exchange to automatically sell your asset if it reaches a certain price. This is your primary tool for cutting losses before they become catastrophic.</li>
+            <li><strong className={styles.strong}>Diversification:</strong> Don't invest in only one cryptocurrency. Spreading your capital across several different projects can mitigate the risk if one of them fails.</li>
+          </ul>
+        </div>
+      );
+    default:
+      return <div>Select a module to begin.</div>;
+  }
+};
+
+const EducationView: React.FC<EducationViewProps> = ({ onViewChange }) => {
+  const [activeModule, setActiveModule] = useState('intro');
 
   return (
-    <div className="pt-24 min-h-screen pb-20 bg-[#030508] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       {/* Header */}
-       <div className="text-center max-w-3xl mx-auto mb-16">
+    <div className="pt-24 min-h-screen pb-20 bg-[#030508]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded border border-blue-500/30 bg-blue-500/10">
             <Award size={14} className="text-blue-400" />
-            <span className="text-blue-400 font-bold uppercase tracking-widest text-[10px]">NEXA Education</span>
+            <span className="text-blue-400 font-bold uppercase tracking-widest text-[10px]">NEXA Education Curriculum</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-bold text-chrome mb-6">Learn to Trade Like a Pro</h1>
+          <h1 className="text-4xl sm:text-6xl font-bold text-chrome mb-6">Beginner to Intermediate</h1>
           <p className="text-xl text-secondary font-light">
-             From basics to advanced strategies, our courses help you master the markets.
+            Your comprehensive guide to understanding and trading the crypto markets.
           </p>
-       </div>
+        </div>
 
-       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-          
-          {/* Main Content Area */}
-          <div className="lg:col-span-8 space-y-8">
-             {/* Filter Controls */}
-             <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/5">
-                <h2 className="text-2xl font-bold text-white font-display">Curriculum</h2>
-                <div className="flex gap-2">
-                   {['all', 'technical', 'fundamental', 'psychology'].map(cat => (
-                     <button 
-                       key={cat}
-                       onClick={() => setFilter(cat)}
-                       className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
-                         filter === cat 
-                           ? 'bg-blue-600 text-white' 
-                           : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
-                       }`}
-                     >
-                       {cat}
-                     </button>
-                   ))}
-                </div>
-             </div>
-             
-             {/* Dynamic Course Grid */}
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {filteredCourses.length > 0 ? (
-                  filteredCourses.map(course => (
-                    <CourseModule key={course.id} {...course} />
-                  ))
-                ) : (
-                  <div className="col-span-2 py-12 text-center text-gray-500 border border-white/5 rounded-xl border-dashed">
-                    No courses found for this category.
-                  </div>
-                )}
-             </div>
-          </div>
-
-          {/* Sidebar / Profile */}
-          <div className="lg:col-span-4 space-y-6">
-             {/* Progress Card */}
-             <div className="p-6 rounded-xl bg-gradient-to-br from-[#0a0d14] to-[#0e121a] border border-white/10 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                  <Award size={100} className="text-white" />
-                </div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-6">
-                     <div className="w-12 h-12 rounded-full border-2 border-blue-500 p-0.5">
-                       <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" className="w-full h-full rounded-full bg-gray-800" />
-                     </div>
-                     <div>
-                       <div className="text-white font-bold text-sm">Your Progress</div>
-                       <div className="text-xs text-blue-400 font-mono">Level 1 • Beginner Trader</div>
-                     </div>
-                  </div>
-
-                  <div className="space-y-4 mb-6">
-                     <div>
-                       <div className="flex justify-between text-xs text-gray-400 mb-1">
-                          <span>XP Progress</span>
-                          <span className="text-white">1,250 / 5,000</span>
-                       </div>
-                       <div className="h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5">
-                          <div className="h-full bg-blue-500 w-[25%] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-                       </div>
-                     </div>
-                     
-                     <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-black/30 p-2 rounded border border-white/5 text-center">
-                          <div className="text-[10px] text-gray-500 uppercase">Courses</div>
-                          <div className="text-lg font-bold text-white">2/15</div>
-                        </div>
-                        <div className="bg-black/30 p-2 rounded border border-white/5 text-center">
-                          <div className="text-[10px] text-gray-500 uppercase">Certificates</div>
-                          <div className="text-lg font-bold text-white">0</div>
-                        </div>
-                     </div>
-                  </div>
-                  
-                  <button className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm uppercase tracking-wide rounded transition-all shadow-lg shadow-blue-900/20">
-                     Resume Learning
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar */}
+          <aside className="lg:w-1/4 xl:w-1/5">
+            <div className="sticky top-24">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-4">Modules</h3>
+              <div className="space-y-2">
+                {modules.map(module => (
+                  <button
+                    key={module.id}
+                    onClick={() => setActiveModule(module.id)}
+                    className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all text-sm font-bold ${
+                      activeModule === module.id
+                        ? 'bg-blue-600/20 text-blue-300'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    }`}
+                  >
+                    <module.icon size={16} />
+                    {module.title}
                   </button>
-                </div>
-             </div>
+                ))}
+              </div>
+            </div>
+          </aside>
 
-             {/* Upcoming Events */}
-             <div className="p-6 rounded-xl bg-[#0e121a] border border-white/5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-white text-sm uppercase tracking-wider">Live Sessions</h3>
-                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                </div>
-                <div className="space-y-4">
-                   <div className="group flex gap-3 p-2 hover:bg-white/5 rounded transition-colors cursor-pointer">
-                      <div className="w-12 h-12 rounded bg-white/5 flex flex-col items-center justify-center border border-white/5 group-hover:border-blue-500/30 transition-colors">
-                         <span className="text-[10px] font-bold text-gray-500">OCT</span>
-                         <span className="text-lg font-bold text-white">14</span>
-                      </div>
-                      <div>
-                         <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">Quarterly Market Outlook</div>
-                         <div className="text-xs text-gray-500 mt-1 flex items-center gap-1"><Clock size={10} /> 14:00 UTC</div>
-                      </div>
-                   </div>
-                   <div className="group flex gap-3 p-2 hover:bg-white/5 rounded transition-colors cursor-pointer">
-                      <div className="w-12 h-12 rounded bg-white/5 flex flex-col items-center justify-center border border-white/5 group-hover:border-blue-500/30 transition-colors">
-                         <span className="text-[10px] font-bold text-gray-500">OCT</span>
-                         <span className="text-lg font-bold text-white">18</span>
-                      </div>
-                      <div>
-                         <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">Advanced Strategy Session</div>
-                         <div className="text-xs text-gray-500 mt-1 flex items-center gap-1"><Clock size={10} /> 09:30 EST</div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-          </div>
-       </div>
+          {/* Main Content */}
+          <main className="lg:w-3/4 xl:w-4/5 bg-[#0a0c10] border border-white/10 rounded-xl p-8 lg:p-12">
+            <EducationContent module={activeModule} />
+          </main>
+        </div>
+      </div>
     </div>
   );
 };

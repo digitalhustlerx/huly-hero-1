@@ -12,8 +12,9 @@ import MarketsView from './components/views/MarketsView';
 import TradeView from './components/views/TradeView';
 import EducationView from './components/views/EducationView';
 import CopyTradingView from './components/views/CopyTradingView';
+import AuthView from './components/views/AuthView';
 
-export type ViewState = 'home' | 'markets' | 'trade' | 'education' | 'copy-trading';
+export type ViewState = 'home' | 'markets' | 'trade' | 'education' | 'copy-trading' | 'auth';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<ViewState>('home');
@@ -36,9 +37,11 @@ export default function App() {
       case 'trade':
         return <TradeView />;
       case 'education':
-        return <EducationView />;
+        return <EducationView onViewChange={handleViewChange} />;
       case 'copy-trading':
-        return <CopyTradingView />;
+        return <CopyTradingView onViewChange={handleViewChange} />;
+      case 'auth':
+        return <AuthView onViewChange={handleViewChange} />;
       case 'home':
       default:
         return (
@@ -46,7 +49,7 @@ export default function App() {
             <Hero onViewChange={handleViewChange} />
             <Features />
             <CopyTrading />
-            <Education />
+            <Education onViewChange={handleViewChange} />
           </>
         );
     }
@@ -60,8 +63,8 @@ export default function App() {
         {renderView()}
       </main>
       
-      {/* Only show footer on non-trade views or simplified footer on trade view */}
-      {currentView !== 'trade' && <Footer />}
+      {/* Only show footer on non-trade/auth views */}
+      {currentView !== 'trade' && currentView !== 'auth' && <Footer />}
     </div>
   );
 }

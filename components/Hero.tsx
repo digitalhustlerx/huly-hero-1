@@ -1,9 +1,8 @@
 
-
 import React, { useEffect, useState } from 'react';
 import './hero.css';
 import { ViewState } from '../App';
-import { ArrowUpRight, ArrowDownRight, Activity } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 interface HeroProps {
   onViewChange?: (view: ViewState) => void;
@@ -91,23 +90,14 @@ const Hero: React.FC<HeroProps> = ({ onViewChange }) => {
             Empowering everyday traders with advanced tools and lightning-fast execution.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 w-full opacity-0 animate-[fadeInUp_0.8s_cubic-bezier(0.215,0.61,0.355,1)_0.9s_forwards] translate-y-[20px]">
+          <div className="flex items-center gap-4 w-full opacity-0 animate-[fadeInUp_0.8s_cubic-bezier(0.215,0.61,0.355,1)_0.9s_forwards] translate-y-[20px]">
             <button 
-              onClick={() => onViewChange && onViewChange('trade')}
-              className="nex-hero__cta" 
-              aria-label="Start Trading Now"
+              onClick={() => onViewChange && onViewChange('auth')}
+              className="nex-hero__huly-btn group" 
+              aria-label="Get Started"
             >
-              Start Trading Now
-              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            
-            <button 
-               onClick={() => onViewChange && onViewChange('markets')}
-               className="flex items-center justify-center h-[3.5rem] px-8 border border-white/20 hover:border-white/50 bg-black/20 hover:bg-white/5 text-white font-display text-sm font-bold uppercase tracking-widest rounded-md transition-all backdrop-blur-sm"
-            >
-               View Markets
+              <span>Get Started</span>
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
         </div>

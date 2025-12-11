@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Menu, Zap, X, Activity, BarChart2, BookOpen, Users, Layout } from 'lucide-react';
+import { Menu, Zap, X, Activity, BarChart2, BookOpen, Users } from 'lucide-react';
 import { ViewState } from '../App';
 
 interface NavbarProps {
@@ -57,8 +57,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange }) => {
             <span className="font-bold text-xl tracking-wide text-white font-display">NEXAFINANCE</span>
           </button>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-gray-400">
+          {/* Desktop Links - Hidden on Tablet (lg) now, shown on XL */}
+          <div className="hidden xl:flex items-center gap-8 text-[14px] font-medium text-gray-400">
             {navLinks.map((item) => (
               <button 
                 key={item.id}
@@ -73,20 +73,20 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange }) => {
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4 z-50">
-          <button className="text-[13px] font-bold text-white hover:text-blue-400 hidden lg:block px-2 transition-colors duration-300 uppercase tracking-wider font-display">
+          <button className="text-[13px] font-bold text-white hover:text-blue-400 hidden xl:block px-2 transition-colors duration-300 uppercase tracking-wider font-display">
             Log In
           </button>
 
           <button 
             onClick={() => onViewChange('trade')}
-            className="hidden lg:flex text-[13px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg transition-all duration-300 uppercase tracking-wider font-display shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]"
+            className="hidden xl:flex text-[13px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg transition-all duration-300 uppercase tracking-wider font-display shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]"
           >
             Connect Wallet
           </button>
           
-          {/* Hamburger Menu Toggle */}
+          {/* Hamburger Menu Toggle - Shown on Tablet/Mobile */}
           <button 
-            className="lg:hidden p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300 focus:outline-none"
+            className="xl:hidden p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300 focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
@@ -95,9 +95,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange }) => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile/Tablet Menu Overlay */}
       <div 
-        className={`fixed inset-0 z-40 bg-[#030508]/95 backdrop-blur-2xl transition-all duration-500 lg:hidden flex flex-col justify-center items-center ${
+        className={`fixed inset-0 z-40 bg-[#030508]/95 backdrop-blur-2xl transition-all duration-500 xl:hidden flex flex-col justify-center items-center ${
           isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >

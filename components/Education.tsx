@@ -2,6 +2,11 @@
 import React from 'react';
 import { BookOpen, ArrowUpRight, Clock, Award } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { ViewState } from '../App';
+
+interface EducationProps {
+  onViewChange: (view: ViewState) => void;
+}
 
 const CourseCard = ({ title, level, duration, category, index }: { title: string, level: string, duration: string, category: string, index: number }) => {
   const { ref, isVisible } = useScrollAnimation(0.1);
@@ -39,7 +44,7 @@ const CourseCard = ({ title, level, duration, category, index }: { title: string
   );
 };
 
-const Education = () => {
+const Education: React.FC<EducationProps> = ({ onViewChange }) => {
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
 
   return (
@@ -65,12 +70,12 @@ const Education = () => {
                  <h4 className="text-white font-bold font-display">Certified Analyst Program</h4>
                </div>
                <p className="text-sm text-gray-500 mb-4">Finish our in-depth program and gain access to real trading capital.</p>
-               <a href="#" className="text-sm font-bold text-white border-b border-blue-500 pb-0.5 hover:text-blue-400 transition-colors">View Requirements</a>
+               <button onClick={() => onViewChange('education')} className="text-sm font-bold text-white border-b border-blue-500 pb-0.5 hover:text-blue-400 transition-colors">View Requirements</button>
             </div>
 
-            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold uppercase tracking-wide text-xs rounded hover:bg-gray-200 transition-colors">
+            <button onClick={() => onViewChange('education')} className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold uppercase tracking-wide text-xs rounded hover:bg-gray-200 transition-colors">
                Full Curriculum <ArrowUpRight size={14} />
-            </a>
+            </button>
           </div>
 
           <div className="lg:w-2/3">

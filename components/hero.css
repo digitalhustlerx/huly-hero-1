@@ -1,9 +1,8 @@
-
 /* Reset & Base */
 .nex-hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100dvh; /* Use dynamic viewport height for mobile */
   min-height: 700px;
   overflow: hidden;
   display: flex;
@@ -28,51 +27,55 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 58% top;
-  transition: object-position 0.5s ease, transform 0.5s ease;
-  filter: saturate(1.1) contrast(1.1); /* Slight boost for better look */
+  /* Push beam to the right to clear space for left-aligned text */
+  object-position: 70% center; 
+  transition: object-position 0.5s ease;
+  filter: saturate(1.1) contrast(1.1);
 }
 
 /* Gradient Overlay - Darker for text legibility */
 .nex-hero__overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 70% 30%, rgba(3, 5, 8, 0.4) 0%, rgba(3, 5, 8, 0.8) 60%, rgba(3, 5, 8, 1) 100%);
+  background: radial-gradient(ellipse at 80% 50%, rgba(3, 5, 8, 0.2) 0%, rgba(3, 5, 8, 0.7) 60%, rgba(3, 5, 8, 0.95) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* Container */
+/* Container - Aligns content vertically centered */
 .nex-hero__container {
   position: relative;
   z-index: 10;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 120px 1.5rem 80px 1.5rem; 
   display: flex;
-  flex-direction: row;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: flex-start; /* Force Left Alignment */
   height: 100%;
-  padding-top: 180px; /* Push content down */
 }
 
-/* Content Block */
+/* Content Block - Left Aligned */
 .nex-hero__content {
   width: 100%;
-  max-width: 650px; 
+  max-width: 600px; 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  align-items: flex-start; /* Left Align Items */
+  text-align: left; /* Left Align Text */
+  position: relative;
+  z-index: 20;
 }
 
 /* Typography Animations */
 .nex-hero__title {
   font-family: 'League Spartan', sans-serif;
-  font-size: 4rem; /* Larger */
+  font-size: 3rem; /* Adjusted for mobile */
   line-height: 1.05;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.03em;
   
   /* Metallic 3D Effect */
@@ -80,94 +83,66 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+  text-shadow: 0 0 25px rgba(0, 0, 0, 0.8); /* Shadow for readability */
   
   opacity: 0;
   transform: translateY(30px);
-  animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s forwards;
+  animation: fadeInUpContent 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s forwards;
 }
 
 .nex-hero__subtext {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.6;
   color: #94a3b8;
-  margin-bottom: 3rem;
-  max-width: 520px;
+  margin-bottom: 2.5rem;
+  max-width: 480px;
   font-weight: 400;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.8); /* Shadow for readability */
+  text-align: left; /* Ensure left alignment */
 
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
+  animation: fadeInUpContent 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
 }
 
-/* CTA Button - Sturdy style */
-.nex-hero__cta {
+/* Huly Style Button */
+.nex-hero__huly-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  height: 3.5rem;
-  padding: 0 2.5rem;
-  background-color: #ffffff;
-  color: #030508;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(90deg, #E0F2FE 0%, #FFFFFF 50%, #BFDBFE 100%);
+  color: #0F172A; /* Dark text for contrast */
   font-family: 'League Spartan', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 6px; /* Squarer corners for "sturdy" look */
+  border-radius: 9999px; /* Pill shape */
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   white-space: nowrap;
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
-
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
 }
 
-.nex-hero__cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-  transition: 0.5s;
-}
-
-.nex-hero__cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
-}
-
-.nex-hero__cta:hover::before {
-  left: 100%;
-}
-
-.nex-hero__cta svg {
-  margin-left: 0.75rem;
-  width: 1.1rem;
-  height: 1.1rem;
-  transition: transform 0.3s ease;
-}
-
-.nex-hero__cta:hover svg {
-  transform: translateX(4px);
+.nex-hero__huly-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 60px rgba(59, 130, 246, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #DBEAFE 100%);
 }
 
 .nex-hero__spacer {
-  flex: 1;
-  height: 1px;
+  flex-grow: 1; /* Pushes ticker down if content is short */
 }
 
 /* Keyframes */
-@keyframes fadeInUp {
+@keyframes fadeInUpContent {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -196,10 +171,6 @@
   overflow: hidden;
   z-index: 20;
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5);
-}
-
-.nex-hero__ticker-label {
-  display: none;
 }
 
 .nex-hero__ticker-mask {
@@ -272,54 +243,27 @@
   box-shadow: 0 0 8px #3b82f6;
 }
 
-/* Tablet: 640px–1023px */
-@media (min-width: 640px) and (max-width: 1023px) {
+/* DESKTOP STYLES (lg and up) */
+@media (min-width: 1024px) {
   .nex-hero__video {
-    object-position: 65% top;
+    /* Beam pushed more to right on desktop */
+    object-position: 80% center;
   }
+  
   .nex-hero__title {
-    font-size: 3.25rem;
-  }
-  .nex-hero__container {
-    padding-top: 140px; 
+    font-size: 4rem; 
   }
 }
 
-/* Mobile: ≤ 639px */
-@media (max-width: 639px) {
-  .nex-hero__bg {
-    animation: none;
-    opacity: 1;
-  }
+/* Tablet/Mobile Adjustments to ensure text doesn't overlap beam if it shifts */
+@media (max-width: 1023px) {
   .nex-hero__video {
-    object-fit: cover;
-    /* Shift focus to the right to reveal the beam/spillover that is cut off on mobile */
-    object-position: 75% top;
-    /* Remove scale to show more of the scene */
-    transform: none;
+    /* Center video on mobile to prevent cropping */
+    object-position: center center;
   }
-  .nex-hero__container {
-    flex-direction: column;
-    justify-content: flex-start; 
-    padding-top: 120px; 
-    padding-bottom: 8vh;
-  }
-  .nex-hero__content {
-    max-width: 100%;
-    padding-bottom: 0;
-  }
-  .nex-hero__title {
-    font-size: 2.75rem;
-    margin-bottom: 1.5rem;
-  }
-  .nex-hero__subtext {
-    font-size: 1.1rem;
-    margin-bottom: 2.5rem;
-  }
-  .nex-hero__ticker-label {
-    display: none; /* Hide label on mobile to save space */
-  }
-  .nex-hero__ticker-mask {
-    left: 0;
+  
+  .nex-hero__overlay {
+    /* Add stronger left-side gradient on mobile to make text pop against any potential beam overlap */
+    background: radial-gradient(ellipse at 80% 50%, rgba(3, 5, 8, 0.1) 0%, rgba(3, 5, 8, 0.8) 50%, rgba(3, 5, 8, 0.95) 90%);
   }
 }
